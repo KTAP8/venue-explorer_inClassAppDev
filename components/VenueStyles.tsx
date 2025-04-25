@@ -30,6 +30,14 @@ const venueStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  cardContainer: {
+    padding: 10,
+  },
+  cardItem: {
+    flex: 1,
+    margin: 1,
+    justifyContent: "center",
+  },
 });
 
 export default venueStyles;
