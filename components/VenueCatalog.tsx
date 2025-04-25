@@ -3,38 +3,21 @@ import { ThemedText } from "./ThemedText";
 import { Card, Text, Avatar } from "react-native-paper";
 import venueStyles from "./VenueStyles";
 import { Button, FlatList, useWindowDimensions, View } from "react-native";
+import { useAppContext } from "@/app/(nav)/_layout";
+import getVenues from "@/libs/getVenues";
+import { router } from "expo-router";
 
 export default function VenueCatalog() {
   const [venueData, setVenueData] = useState<VenueItem[]>([]);
+  const { selectedVenue, setSelectedVenue } = useAppContext();
   const { height, width } = useWindowDimensions();
   const SM_SCREEN = 576;
   const MD_SCREEN = 768;
   const numColumns = width < SM_SCREEN ? 1 : width < MD_SCREEN ? 2 : 3;
 
   useEffect(() => {
-    fetchVenue();
+    getVenues({ setVenueData: setVenueData });
   }, []);
-
-  const fetchVenue = async () => {
-    try {
-      const response = await fetch(
-        "https://4aa5-104-196-207-47.ngrok-free.app/get_venues",
-        {
-          method: "GET",
-          headers: {
-            "ngrok-skip-browser-warning": "true",
-            "Content-type": "application/json",
-          },
-        }
-      );
-      if (response.ok) {
-        const json: VenueJson = await response.json();
-        setVenueData(json.all_venues);
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
 
   const renderCardData = ({ item }: { item: VenueItem }) => (
     <Card style={venueStyles.cardItem}>
@@ -57,7 +40,14 @@ export default function VenueCatalog() {
         source={{ uri: `data:image/jpeg;base64,${item.picture}` }}
       ></Card.Cover>
       <Card.Actions>
-        <Button title="Book this venue"></Button>
+        <Button
+          title="Book this venue"
+          color="#9b59b6"
+          onPress={() => {
+            setSelectedVenue(item._id);
+            router.replace("/explore");
+          }}
+        ></Button>
       </Card.Actions>
     </Card>
   );
