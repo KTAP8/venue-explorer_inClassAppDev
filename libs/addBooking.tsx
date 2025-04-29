@@ -16,7 +16,7 @@ export default function addBooking({
         name_lastname: bookItem.name_lastname,
       });
       const response = await fetch(
-        "https://d703-104-196-207-47.ngrok-free.app/add_booking",
+        "https://0a43-34-86-105-84.ngrok-free.app/add_booking",
         {
           method: "POST",
           headers: {
@@ -24,7 +24,7 @@ export default function addBooking({
             "Content-type": "application/json",
           },
           body: JSON.stringify({
-            venueId: venueId,
+            venue_id: venueId,
             booking_date: bookItem.booking_date,
             email: bookItem.email,
             name_lastname: bookItem.name_lastname,
@@ -35,6 +35,7 @@ export default function addBooking({
       if (response.ok) {
         const json: BookingResponseJson = await response.json();
         setResponse(json);
+        console.log("OK posted");
       }
     } catch (error) {
       console.error("Error posting data:", error);

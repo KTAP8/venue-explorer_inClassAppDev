@@ -6,7 +6,7 @@ export default function getVenues({
   const fetchVenue = async () => {
     try {
       const response = await fetch(
-        "https://d703-104-196-207-47.ngrok-free.app/get_venues",
+        "https://0a43-34-86-105-84.ngrok-free.app/get_venues",
         {
           method: "GET",
           headers: {
